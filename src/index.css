@@ -1,0 +1,156 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
+:root {
+  --bg-ciudadano: #020617;
+  --bg-reciclador: #064e3b;
+  --bg-admin: #422006;
+  --bg-trabajador: #431407;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: black;
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 14px;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+#root {
+  zoom: 0.95;
+}
+
+@media (max-width: 768px) {
+  #root {
+    zoom: 1;
+  }
+  body {
+    font-size: 16px; /* Letra más legible en móvil */
+  }
+}
+
+.role-bg-transition {
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2rem];
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.role-ciudadano { background: radial-gradient(circle at top right, #1e40af 0%, #020617 100%); }
+.role-reciclador { background: radial-gradient(circle at top right, #065f46 0%, #022c22 100%); }
+.role-admin { background: radial-gradient(circle at top right, #854d0e 0%, #422006 100%); }
+.role-trabajador { background: radial-gradient(circle at top right, #9a3412 0%, #431407 100%); }
+
+.btn-eco {
+  @apply px-4 py-2 rounded-lg font-black uppercase tracking-[0.12em] transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-[10px] border-2 border-transparent;
+}
+
+.btn-primary {
+  @apply bg-white text-black hover:bg-gray-100 hover:shadow-xl hover:shadow-white/5;
+}
+
+.btn-outline {
+  @apply bg-white/5 text-gray-400 border-white/10 hover:border-white/20 hover:text-white;
+}
+
+input:not([type="checkbox"]) {
+  @apply bg-white/10 border border-white/5 rounded-lg px-4 py-2.5 outline-none focus:border-white/20 transition-all text-white placeholder-white/10 font-medium text-sm;
+}
+
+#map {
+  mask-image: linear-gradient(to bottom, black 80%, transparent);
+}
+
+/* Fix para Leaflet en móviles */
+.leaflet-container {
+  z-index: 1 !important;
+  background-color: #111827 !important;
+}
+
+/* Ajustes de espaciado responsivo */
+@media (max-width: 768px) {
+  .glass-panel {
+    border-radius: 1.5rem;
+    padding: 1.5rem !important;
+  }
+  
+  main {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  nav {
+    padding: 1rem !important;
+    padding-top: calc(1rem + env(safe-area-inset-top)) !important;
+  }
+  
+  .h-\[calc\(100vh-10rem\)\] {
+    height: auto !important;
+    min-height: calc(100dvh - 8rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem !important;
+  }
+
+  /* El mapa va primero en móvil y ocupa espacio fijo */
+  .lg\:col-span-2 {
+    height: 60dvh !important;
+    min-height: 400px;
+    order: -1; 
+  }
+
+
+  /* La lista de rutas se ajusta debajo */
+  .lg\:col-span-1 {
+    max-height: 40vh;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+}
+
+/* Ocultar scrollbars manteniendo funcionalidad */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Quitar atribución de Leaflet definitivamente */
+.leaflet-control-attribution {
+  display: none !important;
+}
+.leaflet-routing-container { display: none !important; }
